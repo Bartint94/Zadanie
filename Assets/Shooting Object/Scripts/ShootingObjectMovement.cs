@@ -24,7 +24,7 @@ public class ShootingObjectMovement : MonoBehaviour
     {
         elapsed += Time.deltaTime;  
 
-        if(elapsed >= 3)//randTime)
+        if(elapsed >= randTime)
         {
             RandomRotation();
             RandomRotationTime();

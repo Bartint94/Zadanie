@@ -8,6 +8,20 @@ public class ObjectPoolManager : MonoBehaviour
 {
     public static List<PooledObjectInfo> Pools = new List<PooledObjectInfo>();
 
+    GameObject _objectPoolHolder;
+    static GameObject _gameObjectsHolder;
+    private void Awake()
+    {
+        SetupEmptyHolder();
+    }
+    void SetupEmptyHolder()
+    {
+        _objectPoolHolder = new GameObject("Pooled Objects");
+
+        _gameObjectsHolder = new GameObject("Game Objects");
+        _gameObjectsHolder.transform.SetParent(_objectPoolHolder.transform);
+
+    }
     public static GameObject Spawn(GameObject spawnObject, Vector3 spawnPosition, Quaternion spawnRotation)
     {
         PooledObjectInfo pool = Pools.Find(p => p.objectName == spawnObject.name);
@@ -20,9 +34,13 @@ public class ObjectPoolManager : MonoBehaviour
 
         GameObject spawnableObject  = pool.InactiveObjects.FirstOrDefault();
 
-        if(spawnableObject == null)
+        if (spawnableObject == null)
         {
             spawnableObject = Instantiate(spawnObject, spawnPosition, spawnRotation);
+            if (_gameObjectsHolder != null)
+            {
+                spawnableObject.transform.SetParent(_gameObjectsHolder.transform);
+            }
         }
         else
         {

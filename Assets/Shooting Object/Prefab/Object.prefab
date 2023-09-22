@@ -60,8 +60,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4506aca4b0a1d45acb29a41bf6c9a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 4277768949821878346, guid: af90354994a49d1499d1a27f32f1ae20, type: 3}
+  bullet: {fileID: 8299032571824231871, guid: af90354994a49d1499d1a27f32f1ae20, type: 3}
   aimTransform: {fileID: 2306154849785977032}
+  bulletList: []
+  useJobs: 1
 --- !u!114 &8283495681004252267
 MonoBehaviour:
   m_ObjectHideFlags: 0
