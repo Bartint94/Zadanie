@@ -38,13 +38,11 @@ public class ShootingObjectManager : MonoBehaviour
         }
         else
         {
-            if(!isDead)
-            {
-                GameManager.deaths++;
-                Debug.Log(GameManager.deaths);
-            }
+            gameManager.shootingObjects.Remove(this);
             isDead = true;
             Destroy(gameObject);
+               
+            
         }
     }
 }

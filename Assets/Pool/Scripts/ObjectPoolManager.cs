@@ -69,6 +69,14 @@ public class ObjectPoolManager : MonoBehaviour
             pool.InactiveObjects.Add(obj);
         }
     }
+    public static void ReturnAllGameObjects()
+    {
+        GameObject[] all = _gameObjectsHolder.GetComponentsInChildren<GameObject>();    
+        foreach (GameObject obj in all)
+        {
+            ReturnObjectToPool(obj);
+        }
+    }
 }
 public class PooledObjectInfo
 {

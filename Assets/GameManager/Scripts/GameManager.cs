@@ -12,22 +12,23 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] ShootingObjectManager shootingObject;
     [SerializeField] float space;
-    [SerializeField] GameObject uiGameObject;
+    [SerializeField] GameObject mainMenu;
+    [SerializeField] GameObject gameOver;
 
    
 
     int positionId;
-    public int valueToSpawn;
-    public static int deaths;
+    public static int valueToSpawn;
 
     public List<Spawns> spawns = new List<Spawns>();
+    public List<ShootingObjectManager> shootingObjects = new List<ShootingObjectManager>();
 
     public float bulletMaxDistance;
     public static Vector3 midPoint;
 
     public bool useJobs;
     public static List<Bullet> bulletList = new List<Bullet>();
-    
+
     public class Spawns
     {
         public Vector3 spawnPos;
@@ -40,9 +41,16 @@ public class GameManager : MonoBehaviour
     }
     public void StartGame()
     {
-        deaths = 0;
         SpawnObjects(valueToSpawn);
-        uiGameObject.SetActive(false);
+        mainMenu.SetActive(false);
+    }
+    public void GameOver()
+    {
+        Destroy(shootingObjects[0].gameObject);
+        shootingObjects.Clear();
+        spawns.Clear();
+        mainMenu.SetActive(true);
+        gameOver.SetActive(true);
     }
 
     void SpawnObjects(int value)
@@ -71,6 +79,7 @@ public class GameManager : MonoBehaviour
                 {
                     var objSpawned = ObjectPoolManager.Spawn(shootingObject.gameObject, spawnPos, Quaternion.identity);
                     var shootingManager = objSpawned.GetComponent<ShootingObjectManager>();
+                    shootingObjects.Add(shootingManager);
                     shootingManager.positionId = positionId;
 
                     spawn.isFree = false;
@@ -112,6 +121,11 @@ public class GameManager : MonoBehaviour
     NativeArray<float3> forwardList;
     private void FixedUpdate()
     {
+        if(shootingObjects.Count == 1)
+        {
+            GameOver();
+        }
+
         if (useJobs)
         {
             positionList = new NativeArray<float3>(bulletList.Count, Allocator.TempJob);

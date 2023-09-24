@@ -22,8 +22,6 @@ public class Bullet : MonoBehaviour
     }
    private void FixedUpdate()
     {
-        // transform.Translate(0f,0f, speed * Time.deltaTime);  
-
         if (Vector3.Distance(transform.position, midPoint) >= maxDistance)
         {
             GameManager.bulletList.Remove(this);
@@ -35,7 +33,11 @@ public class Bullet : MonoBehaviour
     {
        if(other.CompareTag("Object"))
         {
-            other.GetComponentInParent<ShootingObjectManager>().Dye();
+            var manager = other.GetComponentInParent<ShootingObjectManager>();
+            if (!manager.isDead)
+            {
+                manager.Dye();
+            }
             GameManager.bulletList.Remove(this);
             ObjectPoolManager.ReturnObjectToPool(this.gameObject);
         }
