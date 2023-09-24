@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     }
     public void GameOver()
     {
+        StopAllCoroutines();
         Destroy(shootingObjects[0].gameObject);
         shootingObjects.Clear();
         spawns.Clear();
@@ -99,7 +100,7 @@ public class GameManager : MonoBehaviour
     Spawns FindFreePosition()
     {
         Spawns freeSpawn = spawns.Find(x => x.isFree == true);
-        freeSpawn.isFree = false;
+        freeSpawn.isFree = false; 
         return freeSpawn;
 
     }
