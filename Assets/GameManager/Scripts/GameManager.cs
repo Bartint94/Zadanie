@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] ShootingObjectManager shootingObject;
     [SerializeField] float space;
+    [SerializeField] GameObject uiGameObject;
 
    
 
@@ -33,10 +34,15 @@ public class GameManager : MonoBehaviour
         public bool isFree;
         public int id;
     }
-    private void Start()
+    public void SetValueToSpawn(int value)
+    {
+        valueToSpawn = value;
+    }
+    public void StartGame()
     {
         deaths = 0;
         SpawnObjects(valueToSpawn);
+        uiGameObject.SetActive(false);
     }
 
     void SpawnObjects(int value)
