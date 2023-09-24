@@ -10,6 +10,7 @@ public class ObjectPoolManager : MonoBehaviour
 
     GameObject _objectPoolHolder;
     static GameObject _gameObjectsHolder;
+    public static int spawnedShootings;
     private void Awake()
     {
         SetupEmptyHolder();
@@ -37,6 +38,7 @@ public class ObjectPoolManager : MonoBehaviour
         if (spawnableObject == null)
         {
             spawnableObject = Instantiate(spawnObject, spawnPosition, spawnRotation);
+          
             if (_gameObjectsHolder != null)
             {
                 spawnableObject.transform.SetParent(_gameObjectsHolder.transform);

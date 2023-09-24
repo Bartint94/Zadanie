@@ -11,22 +11,21 @@ public class ShootingObjectAttack : MonoBehaviour
     [SerializeField] Bullet bullet;
     [SerializeField] Transform aimTransform;
 
-
-
     float elapsed;
     float shootCooldown = 1f;
 
     public bool useJobs;
-    
-    void SpawnBullet()
+    private void Start()
     {
-        // Instantiate(bullet,aimTransform.position,transform.rotation);
+    }
+    public void SpawnBullet()
+    {
         var spawnBullet = ObjectPoolManager.Spawn(bullet.gameObject, aimTransform.transform.position, transform.rotation);
         var bulletS = spawnBullet.GetComponent<Bullet>();
         GameManager.bulletList.Add(bulletS);
         
     }
-    private void Update()
+    private void FixedUpdate()
     {
         elapsed += Time.deltaTime;
 

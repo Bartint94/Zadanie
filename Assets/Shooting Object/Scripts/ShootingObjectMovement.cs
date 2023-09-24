@@ -20,7 +20,7 @@ public class ShootingObjectMovement : MonoBehaviour
     {
         randTime = Random.Range(0f, 1f);
     }
-    private void Update()
+    private void FixedUpdate()
     {
         elapsed += Time.deltaTime;  
 
@@ -31,5 +31,5 @@ public class ShootingObjectMovement : MonoBehaviour
             elapsed = 0f;
         }
     }
-
+   
 }

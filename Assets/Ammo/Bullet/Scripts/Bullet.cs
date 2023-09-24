@@ -7,28 +7,37 @@ public class Bullet : MonoBehaviour
     [SerializeField] float speed;
     public static float maxDistance;
     public Vector3 startPos;
-    public ShootingObjectAttack attack;
+    public Vector3 midPoint;
+
+   
     private void OnEnable()
     {
         startPos = transform.position;
+        midPoint = GameManager.midPoint;
     }
-    private void FixedUpdate()
+   public void ReturnBullet()
     {
-       // transform.Translate(0f,0f, speed * Time.deltaTime);  
-        
-       // if(Vector3.Distance(transform.position, startPos) >= maxDistance )
-        {
-         //   manager.bulletList.Remove(this);
-         //   ObjectPoolManager.ReturnObjectToPool(gameObject);
+        GameManager.bulletList.Remove(this);
+        ObjectPoolManager.ReturnObjectToPool(this.gameObject);
+    }
+   private void FixedUpdate()
+    {
+        // transform.Translate(0f,0f, speed * Time.deltaTime);  
 
-        }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("Wall"))
+        if (Vector3.Distance(transform.position, midPoint) >= maxDistance)
         {
             GameManager.bulletList.Remove(this);
-            ObjectPoolManager.ReturnObjectToPool(gameObject);
+            ObjectPoolManager.ReturnObjectToPool(this.gameObject);
+        }
+    }
+  
+    private void OnTriggerEnter(Collider other)
+    {
+       if(other.CompareTag("Object"))
+        {
+            other.GetComponentInParent<ShootingObjectManager>().Dye();
+            GameManager.bulletList.Remove(this);
+            ObjectPoolManager.ReturnObjectToPool(this.gameObject);
         }
     }
 
